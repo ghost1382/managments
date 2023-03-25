@@ -82,4 +82,8 @@ class User extends Authenticatable
     {
         return $this->completedLessons->contains($lesson->id);
     }
+    public function classes()
+{
+    return $this->belongsTo(Classes::class, 'class_id');
+}
 }
