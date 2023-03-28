@@ -32,20 +32,16 @@ class Course extends Model
     {
         return $this->belongsToMany(User::class);
     }
-
-    public function addUser($email)
+    public function addUser($class_id)
     {
-        $user = User::where('email', $email)->first();
-
-        if (!$user) {
-            return;
-        }
-
-        if ($this->users()->where('users.id', $user->id)->doesntExist()){
-            $this->users()->attach($user);
+        $users = User::where('class_id', $class_id)->get();
+    
+        foreach ($users as $user) {
+            $this->users()->attach($user->id, ['class_id' => $class_id]);
         }
     }
-
+    
+    
     public function removeUser($user)
     {
         $this->users()->detach($user->id);
