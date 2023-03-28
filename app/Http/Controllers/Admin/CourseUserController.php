@@ -15,14 +15,23 @@ class CourseUserController extends Controller
     public function store(Request $request, Course $course)
     {
         $class_id = $request->input('class_id');
-        $users = User::where('class_id', $class_id)->get();
-    
-        foreach ($users as $user) {
+        $existing_users = $course->users()->where('class_id', $class_id)->pluck('users.id')->toArray();
+        $new_users = User::where('class_id', $class_id)
+            ->whereNotIn('id', $existing_users)
+            ->get();
+        $user_ids = [];
+        foreach ($new_users as $user) {
             $user->courses()->attach($course->id, ['class_id' => $class_id]);
+            $user_ids[] = $user->id;
         }
-    
-        return redirect()->route('courses.users.index', $course)->with('success', 'Users added successfully');
+        if (count($user_ids) > 0) {
+            return back()->with('success', 'New users added successfully');
+        } else {
+            return back()->with('warning', 'All users are already enrolled in this course');
+        }
     }
+    
+
     
  
     public function index(Course $course)
