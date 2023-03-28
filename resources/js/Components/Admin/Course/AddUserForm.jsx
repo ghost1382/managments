@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from '@inertiajs/inertia-react';
 
 import ValidationErrors from '@/Components/ValidationErrors';
@@ -6,17 +6,29 @@ import Label from '@/Components/Label';
 import Button from '@/Components/Button';
 
 export default function AddUserToCourse({ course }) {
+    const [isLoading, setIsLoading] = useState(false);
     const { data, setData, post, errors: formErrors } = useForm({
         class_id: ''
     });
 
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        setIsLoading(true);
+
+        post(route('admin.course.user.store', course), {
+            onSuccess: (response) => {
+                setData('class_id', '');
+                course.users = response.users;
+            },
+            onError: () => {
+                setIsLoading(false);
+            }
+        });
+    };
+
     return (
-        <form
-            onSubmit={e => {
-                e.preventDefault();
-                post(route('admin.course.user.store', course));
-            }}
-        >
+        <form onSubmit={handleSubmit}>
             <ValidationErrors errors={formErrors} />
             <div className="flex items-end gap-4">
                 <div>
@@ -30,8 +42,8 @@ export default function AddUserToCourse({ course }) {
                         {/* Add more options as needed */}
                     </select>
                 </div>
-                <Button>
-                    Add Users
+                <Button disabled={isLoading}>
+                    {isLoading ? 'Adding Users...' : 'Add Users'}
                 </Button>
             </div>
         </form>

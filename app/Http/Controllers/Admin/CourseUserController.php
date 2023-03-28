@@ -16,12 +16,21 @@ class CourseUserController extends Controller
     {
         $class_id = $request->input('class_id');
         $users = User::where('class_id', $class_id)->get();
+        $existingUsers = $course->users()->pluck('id')->toArray();
     
+        $newUsers = [];
         foreach ($users as $user) {
-            $user->courses()->attach($course->id, ['class_id' => $class_id]);
+            if (!in_array($user->id, $existingUsers)) {
+                $newUsers[] = $user;
+            }
         }
     
-        return redirect()->route('courses.users.index', $course)->with('success', 'Users added successfully');
+        if (count($newUsers) > 0) {
+            $course->users()->saveMany($newUsers, ['class_id' => $class_id]);
+            return redirect()->route('courses.users.index', $course)->with('success', 'Users added successfully');
+        } else {
+            return redirect()->route('courses.users.index', $course)->with('warning', 'All selected users are already in the course');
+        }
     }
     
  

@@ -10,7 +10,13 @@ class Course extends Model
 {
     use HasFactory;
 
-    protected $guarded = [];
+    protected $fillable = [
+        'title',
+        'description',
+        'image_path',
+        'file_path',
+        'class_id' 
+    ];
 
     protected static function booted()
     {
@@ -42,8 +48,14 @@ class Course extends Model
     }
     
     
+    
     public function removeUser($user)
     {
         $this->users()->detach($user->id);
     }
+    public function class()
+    {
+        return $this->belongsTo(Classes::class);
+    }
+    
 }
