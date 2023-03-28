@@ -6,12 +6,13 @@ import Label from '@/Components/Label';
 import ValidationErrors from '@/Components/ValidationErrors';
 import { Head, Link, useForm } from '@inertiajs/inertia-react';
 
-export default function Register() {
+export default function Register({ classes }) {
     const { data, setData, post, processing, errors, reset } = useForm({
         name: '',
         email: '',
         password: '',
         password_confirmation: '',
+        class_id: ''
     });
 
     useEffect(() => {
@@ -93,6 +94,24 @@ export default function Register() {
                     />
                 </div>
 
+                <div className="mt-4">
+                    <Label forInput="class_id" value="Select a class" />
+
+                    <select
+                        name="class_id"
+                        value={data.class_id}
+                        className="mt-1 block w-full"
+                        onChange={onHandleChange}
+                        required
+                    >
+                        <option value="">Select a class</option>
+                        <option value="1">S1</option>
+                        <option value="2">S2</option>
+                        <option value="3">S3</option>
+                        <option value="4">Master</option>
+                    </select>
+                </div>
+
                 <div className="flex items-center justify-end mt-4">
                     <Link href={route('login')} className="underline text-sm text-gray-600 hover:text-gray-900">
                         Already registered?
@@ -102,7 +121,7 @@ export default function Register() {
                         Register
                     </Button>
                 </div>
-            </form>
-        </Guest>
-    );
+      </form>
+    </Guest>
+  );
 }

@@ -21,7 +21,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'user_role_id'
+        'user_role_id',
+        'class_id'
     ];
 
     /**
@@ -81,4 +82,8 @@ class User extends Authenticatable
     {
         return $this->completedLessons->contains($lesson->id);
     }
+    public function classes()
+{
+    return $this->belongsTo(Classes::class, 'class_id');
+}
 }
