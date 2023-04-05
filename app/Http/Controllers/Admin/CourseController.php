@@ -89,20 +89,29 @@ class CourseController extends Controller
         return Redirect::route('admin.course.index');
     }
     public function upload(Request $request, $id)
+    {
+        $course = Course::findOrFail($id);
+    
+        if ($request->hasFile('file')) {
+            $file = $request->file('file');
+            $filename = time() . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('files/courses'), $filename);
+            $course->file_path = 'files/courses/' . $filename;
+            $course->save();
+        }
+    
+        return response()->json([
+            'message' => 'File uploaded successfully',
+            'file_path' => $course->file_path
+        ]);
+    }
+    
+    public function downloadFile($id)
 {
     $course = Course::findOrFail($id);
 
-    if ($request->hasFile('file')) {
-        $file = $request->file('file');
-        $path = $file->store('courses');
-        $course->file_path = $path;
-        $course->save();
-    }
-
-    return response()->json([
-        'message' => 'File uploaded successfully',
-        'file_path' => $course->file_path
-    ]);
+    return response()->download(public_path($course->file_path));
 }
+
 
 }

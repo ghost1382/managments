@@ -3,43 +3,48 @@
 @import 'tailwindcss/utilities';
 
 .button {
-	@apply inline-flex items-center px-4 py-2 bg-gray-900 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-900 transition ease-in-out duration-150;
-}
+    @apply inline-flex items-center px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-sm text-white uppercase tracking-widest hover:bg-red-700 focus:outline-none focus:border-purple-900 focus:shadow-outline-purple active:bg-purple-800 transition ease-in-out duration-150;
+}	
 
 .table {
-	@apply bg-white rounded shadow w-full;
+    @apply bg-gray-800 rounded shadow-lg w-full divide-y divide-gray-700;
 }
 
 .table th,
 .table td {
-	@apply py-4 px-5 text-left;
+    @apply py-3 px-6 text-left text-gray-300;
 }
 
 h1,
 .h1 {
-	@apply text-4xl font-bold mb-4;
+    @apply text-4xl font-extrabold text-gray-200 mt-12 mb-6;
 }
 
 h2,
 .h2 {
-	@apply text-3xl font-bold mb-3;
+    @apply text-3xl font-extrabold text-gray-200 mt-8 mb-4;
 }
 
 h3,
 .h3 {
-	@apply text-2xl font-bold mb-2;
+    @apply text-2xl font-bold text-gray-200 mt-6 mb-2;
 }
 
 h4,
 .h4 {
-	@apply text-xl font-bold mb-2;
+    @apply text-xl font-bold text-gray-200 mt-4 mb-2;
 }
 
 h5,
 .h5 {
-	@apply text-lg font-bold mb-2;
+    @apply text-lg font-bold text-gray-200 mt-4 mb-2;
 }
 
 p {
-	@apply mb-6;
+    @apply text-gray-400 mb-4;
+}
+
+.select1 {
+    @apply block w-full py-2 px-3 rounded-md border border-gray-300 bg-white text-gray-900 focus:border-purple-500 focus:outline-none focus:ring-purple-500 focus:ring-2;
+    border-radius: 0.375rem;
 }

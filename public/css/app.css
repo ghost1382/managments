@@ -32062,12 +32062,12 @@ select {
   border-width: 1px;
   border-color: transparent;
   --tw-bg-opacity: 1;
-  background-color: rgba(17, 24, 39, var(--tw-bg-opacity));
+  background-color: rgba(16, 185, 129, var(--tw-bg-opacity));
 }
 
 .button:hover {
   --tw-bg-opacity: 1;
-  background-color: rgba(17, 24, 39, var(--tw-bg-opacity));
+  background-color: rgba(191, 219, 254, var(--tw-bg-opacity));
 }
 
 .button {
@@ -32089,6 +32089,7 @@ select {
   transition-duration: 150ms;
   transition-duration: 150ms;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  background-color: brown;
 }
 
 .table {
