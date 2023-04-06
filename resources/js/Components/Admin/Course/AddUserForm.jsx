@@ -39,7 +39,7 @@ export default function AddUserToCourse({ course }) {
                             { value: '4', label: 'Master' },
                         ]}
                     />
-                    <Button color="green">Add</Button> 
+                    <Button>Add</Button> 
                 </div>
                 
             </div>

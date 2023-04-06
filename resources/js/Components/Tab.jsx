@@ -1,15 +1,15 @@
 import React from 'react';
 
 export default function({onClick, children, isActive}) {
-	let className = 'border-2 border-blue-500 px-4 py-2 rounded';
-
+	let className = 'btn border-2 border-yellow-700 px-4 py-2 rounded transition-transform duration-300 ease-in-out transform-gpu ';
+  
 	if (isActive) {
-		className += ' bg-blue-500 text-white';
+	  className += ' bg-yellow-700 text-white shadow-md hover:scale-105';
 	} else {
-		className += ' bg-red';
+	  className += ' bg-white hover:bg-yellow-100 hover:shadow-md';
 	}
-
+  
 	return (
-		<button className={className} onClick={onClick}>{children}</button>
+	  <button className={className} onClick={onClick}>{children}</button>
 	)
-}
+  } 
