@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -15,11 +14,11 @@ class Course extends Model
     protected static function booted()
     {
         static::creating(function($course) {
-            $course->content = Purifier::clean($course->content);
+            $course->file_name = Purifier::clean($course->file_name);
         });
 
         static::updating(function($course) {
-            $course->content = Purifier::clean($course->content);
+            $course->file_name = Purifier::clean($course->file_name);
         });
     }
 
@@ -32,16 +31,16 @@ class Course extends Model
     {
         return $this->belongsToMany(User::class);
     }
+
     public function addUser($class_id)
     {
         $users = User::where('class_id', $class_id)->get();
-    
+
         foreach ($users as $user) {
             $this->users()->attach($user->id, ['class_id' => $class_id]);
         }
     }
-    
-    
+
     public function removeUser($user)
     {
         $this->users()->detach($user->id);

@@ -34,46 +34,30 @@ class CourseController extends Controller
         
     }
 
-    public function store(StoreCourseRequest $request)
+    public function store(Request $request)
     {
-        Course::create($request->all());
-
-        return Redirect::route('admin.course.index');
-        $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'required|string|max:500',
-            'image' => 'required|file|max:1024', // Add validation for the image file
-            'file' => 'required|file|max:1024', // Add validation for the uploaded file
+        $validatedData = $request->validate([
+            'title' => 'required',
+            'file' => 'required|file|max:2048',
         ]);
     
-        $course = new Course();
-        $course->title = $request->title;
-        $course->description = $request->description;
+        $file = $request->file('file');
     
-        // Handle the image upload
-        if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $filename = time() . '.' . $image->getClientOriginalExtension();
-            $image->move(public_path('images/courses'), $filename);
-            $course->image_path = 'images/courses/' . $filename;
-        }
+        $file_name = time() . '_' . $file->getClientOriginalName();
+        $file_path = $file->storeAs('public/files', $file_name);
     
-        // Handle the file upload
-        if ($request->hasFile('file')) {
-            $file = $request->file('file');
-            $filename = time() . '.' . $file->getClientOriginalExtension();
-            $file->move(public_path('files/courses'), $filename);
-            $course->file_path = 'files/courses/' . $filename;
-        }
-    
-        $course->user_id = auth()->user()->id;
-        $course->save();
-    
-        return response()->json([
-            'message' => 'Course created successfully!',
-            'course' => $course
+        $course = Course::create([
+            'title' => $validatedData['title'],
+            'file_name' => $file_name,
+            'file_path' => str_replace('public/', '', $file_path),
         ]);
+    
+        return redirect()->route('admin.course.index', $course->id);
     }
+    
+    
+
+
 
     public function update(UpdateCourseRequest $request, Course $course)
     {
@@ -107,11 +91,11 @@ class CourseController extends Controller
     }
     
     public function downloadFile($id)
-{
-    $course = Course::findOrFail($id);
-
-    return response()->download(public_path($course->file_path));
-}
-
+    {
+        $course = Course::findOrFail($id);
+    
+        return response()->download(public_path($course->file_path), $course->file_name);
+    }
+ 
 
 }
