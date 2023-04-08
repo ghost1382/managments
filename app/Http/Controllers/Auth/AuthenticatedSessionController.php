@@ -32,14 +32,17 @@ class AuthenticatedSessionController extends Controller
      * @return \Illuminate\Http\RedirectResponse
      */
     public function store(LoginRequest $request)
-    {
-        $request->authenticate();
+{
+    $request->authenticate();
 
-        $request->session()->regenerate();
+    $request->session()->regenerate();
 
-        return redirect()->intended(route('my-courses'));
+    if (Auth::user()->isAdmin()) {
+        return redirect()->route('admin.course.index');
     }
 
+    return redirect()->intended(route('my-courses'));
+}
     /**
      * Destroy an authenticated session.
      *
