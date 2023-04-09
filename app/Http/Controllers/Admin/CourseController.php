@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Requests\StoreCourseRequest;
 use App\Http\Requests\UpdateCourseRequest;
+use Illuminate\Support\Facades\Storage;
 
 class CourseController extends Controller
 {
@@ -52,8 +53,20 @@ class CourseController extends Controller
             'file_path' => str_replace('public/', '', $file_path),
         ]);
     
-        return redirect()->route('admin.course.index', $course->id);
+        $fileUrl = Storage::url($file_path);
+    
+        return response()->json([
+            'message' => 'File uploaded successfully',
+            'file_url' => $fileUrl,
+        ]);
     }
+    public function downloadFile($id)
+{
+    $course = Course::findOrFail($id);
+    $file_path = Storage::disk('public')->path($course->file_path);
+    return response()->download($file_path, $course->file_name);
+}
+    
     
     
 
@@ -90,12 +103,8 @@ class CourseController extends Controller
         ]);
     }
     
-    public function downloadFile($id)
-    {
-        $course = Course::findOrFail($id);
+
     
-        return response()->download(public_path($course->file_path), $course->file_name);
-    }
  
 
 }

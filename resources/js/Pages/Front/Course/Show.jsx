@@ -4,6 +4,8 @@ import ModuleList from '@/Components/Front/Module/ModuleList';
 import { Link } from '@inertiajs/inertia-react';
 
 export default function ({ course, modules }) {
+  const fileUrl = process.env.MIX_APP_URL + '/storage/' + course.file_path;
+  console.log(fileUrl);
   return (
     <Layout>
       <div className="max-w-5xl mx-auto py-8">
@@ -16,6 +18,15 @@ export default function ({ course, modules }) {
           <h2 className="text-2xl font-bold mb-2">Modules</h2>
           <ModuleList modules={modules} course={course} />
         </div>
+
+        {fileUrl && (
+    <div>
+        <h2 className="text-2xl font-bold mb-2">Download File</h2>
+        <a href={fileUrl} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+            Download
+        </a>
+    </div>
+)}
       </div>
     </Layout>
   )

@@ -7775,6 +7775,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ function __WEBPACK_DEFAULT_EXPORT__(_ref) {
   var course = _ref.course,
       modules = _ref.modules;
+  var fileUrl = "http://127.0.0.1:8000" + '/storage/' + course.file_path;
+  console.log(fileUrl);
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_Layouts_Layout__WEBPACK_IMPORTED_MODULE_1__["default"], {
     children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
       className: "max-w-5xl mx-auto py-8",
@@ -7803,6 +7805,15 @@ __webpack_require__.r(__webpack_exports__);
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_Components_Front_Module_ModuleList__WEBPACK_IMPORTED_MODULE_2__["default"], {
           modules: modules,
           course: course
+        })]
+      }), fileUrl && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("h2", {
+          className: "text-2xl font-bold mb-2",
+          children: "Download File"
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("a", {
+          href: fileUrl,
+          className: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded",
+          children: "Download"
         })]
       })]
     })
