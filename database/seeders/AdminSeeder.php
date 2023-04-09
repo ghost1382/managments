@@ -18,8 +18,8 @@ class AdminSeeder extends Seeder
     {
         $users = [
             'Alice Williams' => 'alice@10degrees.uk',
-            'John Doe' => 'test@10degrees.uk',
-            'mohammed'=>'mohammed.bn884@gmail.com'
+            'John Doe' => 'test@10degrees.uk'
+            
         ];
 
         $adminUserRole = UserRole::where('name', 'admin')->first();
