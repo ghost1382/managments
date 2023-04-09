@@ -1,6 +1,7 @@
 import React from 'react';
 import Input from '@/Components/Input';
 import Label from '@/Components/Label';
+import Button from '@/Components/Button';
 
 const CourseForm = ({form, setForm, handleSubmit, csrfToken}) => {
     
@@ -15,8 +16,8 @@ const CourseForm = ({form, setForm, handleSubmit, csrfToken}) => {
                 <Label>File</Label>
                 <input type="file" name="file" onChange={e => setForm({...form, file: e.target.files[0]})} />
             </div>
-
-            <button type="submit">Create Course</button>
+<br/>
+            <Button type="submit">Create Course</Button>
         </form>
     )
 }

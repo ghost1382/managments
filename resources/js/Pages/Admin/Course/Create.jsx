@@ -19,15 +19,15 @@ const Create = ({auth, errors}) => {
 
 	return (
 		<Authenticated auth={auth} errors={errors} header={<h2>Create Course</h2>}>
-			<form onSubmit={(e) => {
+			<span onSubmit={(e) => {
 				e.preventDefault();
 				post(route('admin.course.store'));
 			}}>
 				<ValidationErrors errors={formErrors} />
 
 				<CourseFields form={data} setData={setData} editorRef={editorRef}/>
-				<Button className="mt-4">Create</Button>
-			</form>
+			
+			</span>
 		</Authenticated>
 	)
 }	
