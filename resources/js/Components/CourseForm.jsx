@@ -14,9 +14,12 @@ const CourseForm = ({form, setForm, handleSubmit, csrfToken}) => {
 
             <div className="mt-4">
                 <Label>File</Label>
-                <input type="file" name="file" onChange={e => setForm({...form, file: e.target.files[0]})} />
+                <label className="file-input-label">
+                    <span className="file-input-text">{form.file ? form.file.name : 'Choose File'}</span>
+                    <input className="file-input" type="file" name="file" onChange={e => setForm({...form, file: e.target.files[0]})} />
+                </label>
             </div>
-<br/>
+            <br />
             <Button type="submit">Create Course</Button>
         </form>
     )

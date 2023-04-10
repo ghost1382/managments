@@ -5000,14 +5000,21 @@ var CourseForm = function CourseForm(_ref) {
       className: "mt-4",
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_Components_Label__WEBPACK_IMPORTED_MODULE_2__["default"], {
         children: "File"
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("input", {
-        type: "file",
-        name: "file",
-        onChange: function onChange(e) {
-          return setForm(_objectSpread(_objectSpread({}, form), {}, {
-            file: e.target.files[0]
-          }));
-        }
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("label", {
+        className: "file-input-label",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("span", {
+          className: "file-input-text",
+          children: form.file ? form.file.name : 'Choose File'
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("input", {
+          className: "file-input",
+          type: "file",
+          name: "file",
+          onChange: function onChange(e) {
+            return setForm(_objectSpread(_objectSpread({}, form), {}, {
+              file: e.target.files[0]
+            }));
+          }
+        })]
       })]
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("br", {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_Components_Button__WEBPACK_IMPORTED_MODULE_3__["default"], {
       type: "submit",
