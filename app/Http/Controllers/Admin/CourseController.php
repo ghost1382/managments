@@ -43,9 +43,15 @@ class CourseController extends Controller
         ]);
     
         $file = $request->file('file');
-    
         $file_name = time() . '_' . $file->getClientOriginalName();
         $file_path = $file->storeAs('public/files', $file_name);
+    
+        // Check if a course with the same title already exists
+        $existingCourse = Course::where('title', $validatedData['title'])->first();
+    
+        if ($existingCourse) {
+            return redirect()->back()->with('error', 'A course with the same title already exists');
+        }
     
         $course = Course::create([
             'title' => $validatedData['title'],
@@ -55,11 +61,10 @@ class CourseController extends Controller
     
         $fileUrl = Storage::url($file_path);
     
-        return response()->json([
-            'message' => 'File uploaded successfully',
-            'file_url' => $fileUrl,
-        ]);
+        return redirect()->back()->with('success', 'File uploaded successfully');
     }
+    
+
     public function downloadFile($id)
 {
     $course = Course::findOrFail($id);
