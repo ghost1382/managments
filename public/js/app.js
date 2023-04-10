@@ -6188,7 +6188,7 @@ var Create = function Create(_ref) {
     header: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("h2", {
       children: "Create Course"
     }),
-    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("span", {
+    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("form", {
       onSubmit: function onSubmit(e) {
         e.preventDefault();
         post(route('admin.course.store'));

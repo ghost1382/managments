@@ -19,7 +19,7 @@ const Create = ({auth, errors}) => {
 
 	return (
 		<Authenticated auth={auth} errors={errors} header={<h2>Create Course</h2>}>
-			<span onSubmit={(e) => {
+			<form onSubmit={(e) => {
 				e.preventDefault();
 				post(route('admin.course.store'));
 			}}>
@@ -27,7 +27,7 @@ const Create = ({auth, errors}) => {
 
 				<CourseFields form={data} setData={setData} editorRef={editorRef}/>
 			
-			</span>
+			</form>
 		</Authenticated>
 	)
 }	
