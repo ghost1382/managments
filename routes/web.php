@@ -53,10 +53,10 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'verified', 'isAdmin
 
     Route::resource('user', App\Http\Controllers\Admin\UserController::class)->only(['index', 'create', 'store', 'show']);
     Route::get('course/{course}', [App\Http\Controllers\Admin\CourseController::class, 'show'])->name('admin.course.index');
+    Route::put('course/{course}', [App\Http\Controllers\Admin\CourseController::class, 'update'])->name('admin.course.update');
     Route::resource('course.user', App\Http\Controllers\Admin\CourseUserController::class)->only(['destroy']);
 });
 
 
 
 require __DIR__.'/auth.php';
-

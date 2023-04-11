@@ -38,10 +38,9 @@ class CourseController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'title' => 'required',
-            'file' => 'required|file|max:2048',
+            'title' => 'required|string',
+            'file' => 'nullable|file|mimes:pdf|max:2048',
         ]);
-    
         $file = $request->file('file');
         $file_name = time() . '_' . $file->getClientOriginalName();
         $file_path = $file->storeAs('public/files', $file_name);
@@ -77,37 +76,44 @@ class CourseController extends Controller
 
 
 
-    public function update(UpdateCourseRequest $request, Course $course)
-    {
-        $course->update($request->all());
-
-        return Redirect::route('admin.course.edit', $course);
-    }
-
-    public function destroy(Request $request, Course $course)
-    {
-        $course->delete();
-
-        return Redirect::route('admin.course.index');
-    }
-    public function upload(Request $request, $id)
-    {
-        $course = Course::findOrFail($id);
+public function update(Request $request, Course $course)
+{
+    $validatedData = $request->validate([
+        'title' => 'required|string',
+        'file' => 'nullable|file|mimes:pdf|max:2048',
+    ]);
     
-        if ($request->hasFile('file')) {
-            $file = $request->file('file');
-            $filename = time() . '.' . $file->getClientOriginalExtension();
-            $file->move(public_path('files/courses'), $filename);
-            $course->file_path = 'files/courses/' . $filename;
-            $course->save();
-        }
+    // Check if a course with the same title already exists
+    $existingCourse = Course::where('title', $validatedData['title'])->where('id', '!=', $course->id)->first();
     
-        return response()->json([
-            'message' => 'File uploaded successfully',
-            'file_path' => $course->file_path
+    if ($existingCourse) {
+        return redirect()->back()->with('error', 'A course with the same title already exists');
+    }
+    
+    if ($request->hasFile('file')) {
+        $file = $request->file('file');
+        $file_name = time() . '_' . $file->getClientOriginalName();
+        $file_path = $file->storeAs('public/files', $file_name);
+    
+        $course->update([
+            'title' => $validatedData['title'],
+            'file_name' => $file_name,
+            'file_path' => str_replace('public/', '', $file_path),
         ]);
+
+        $fileUrl = Storage::url($file_path);
+
+        return redirect()->back()->with('success', 'Course updated successfully');
+    } else {
+        $course->update([
+            'title' => $validatedData['title'],
+        ]);
+
+        return redirect()->back()->with('success', 'Course title updated successfully');
     }
-    
+}
+
+
 
     
  
