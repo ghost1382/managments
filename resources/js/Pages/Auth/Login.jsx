@@ -44,7 +44,7 @@ export default function Login({ status, canResetPassword }) {
       <ValidationErrors errors={errors} />
 
       <form onSubmit={submit}>
-        <div className="mt-6">
+        <div className="mt-6 ">
           <Label forInput="email" value="Email" />
           <Input
             type="text"
